@@ -2,7 +2,7 @@ package BetterMuslimTracker;
 
 public class CompulsoryPrayers {
     private Prayer[] compulsoryPrayers = new Prayer[5];
-    private PrayerTime prayerTime = new PrayerTime();
+    private PrayersTime prayerTime = new PrayersTime();
 
     public CompulsoryPrayers() {
         for (CompulsoryPrayersTimeEnum e : CompulsoryPrayersTimeEnum.values()) {

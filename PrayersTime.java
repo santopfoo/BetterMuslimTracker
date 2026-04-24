@@ -2,11 +2,11 @@ package BetterMuslimTracker;
 
 import java.time.LocalTime;
 
-public class PrayerTime {
+public class PrayersTime {
 
     private LocalTime[] prayerTime = new LocalTime[5];
     
-    public PrayerTime() {
+    public PrayersTime() {
         this.prayerTime[CompulsoryPrayersTimeEnum.SUBUH.ordinal()] = LocalTime.parse("06:00");
         this.prayerTime[CompulsoryPrayersTimeEnum.ZOHOR.ordinal()] = LocalTime.parse("13:20");
         this.prayerTime[CompulsoryPrayersTimeEnum.ASAR.ordinal()] = LocalTime.parse("16:40");

@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        PrayerTime prayerTime = new PrayerTime();
+        PrayersTime prayerTime = new PrayersTime();
         CompulsoryPrayers compulsoryPrayers = new CompulsoryPrayers();
 
         LocalTime currTime = LocalTime.now();
@@ -75,7 +75,7 @@ public class Main {
         }
     }
 
-    private static void displayCurrentPrayer(CompulsoryPrayers compulsoryPrayers, LocalTime currTime, PrayerTime prayerTime) {
+    private static void displayCurrentPrayer(CompulsoryPrayers compulsoryPrayers, LocalTime currTime, PrayersTime prayerTime) {
         for (CompulsoryPrayersTimeEnum e : CompulsoryPrayersTimeEnum.values()) {
             if (
                 currTime.isAfter(prayerTime.getPrayerTime(e.ordinal()).minusMinutes(1)) && 
@@ -95,7 +95,7 @@ public class Main {
         }
     }
 
-    private static void displayMissedPrayers(CompulsoryPrayers compulsoryPrayers, LocalTime currTime, PrayerTime prayerTime) {
+    private static void displayMissedPrayers(CompulsoryPrayers compulsoryPrayers, LocalTime currTime, PrayersTime prayerTime) {
         boolean havePrayersNotDone = false;
         int[] prayerNotDoneArr = new int[5];
         for (CompulsoryPrayersTimeEnum e : CompulsoryPrayersTimeEnum.values()) {
