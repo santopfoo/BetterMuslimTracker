@@ -1,13 +1,11 @@
 package BetterMuslimTracker;
 
-import java.time.LocalTime;
-
 public class CompulsoryPrayers {
     private Prayer[] compulsoryPrayers = new Prayer[5];
     private PrayerTime prayerTime = new PrayerTime();
 
     public CompulsoryPrayers() {
-        for (CompulsoryPrayerTimeEnum e : CompulsoryPrayerTimeEnum.values()) {
+        for (CompulsoryPrayersTimeEnum e : CompulsoryPrayersTimeEnum.values()) {
             compulsoryPrayers[e.ordinal()] = new Prayer(
                 e.toString(), 
                 prayerTime.getPrayerTime(e.ordinal()),

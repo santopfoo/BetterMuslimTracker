@@ -70,27 +70,27 @@ public class Main {
     }  
 
     private static void displayCompulsoryPrayersTime(CompulsoryPrayers compulsoryPrayers, LocalTime currTime) {
-            for (CompulsoryPrayerTimeEnum e : CompulsoryPrayerTimeEnum.values()) {
+            for (CompulsoryPrayersTimeEnum e : CompulsoryPrayersTimeEnum.values()) {
             System.out.println("\n" + compulsoryPrayers.getFromIndex(e.ordinal()).toString());
         }
     }
 
     private static void displayCurrentPrayer(CompulsoryPrayers compulsoryPrayers, LocalTime currTime, PrayerTime prayerTime) {
-        for (CompulsoryPrayerTimeEnum e : CompulsoryPrayerTimeEnum.values()) {
+        for (CompulsoryPrayersTimeEnum e : CompulsoryPrayersTimeEnum.values()) {
             if (
                 currTime.isAfter(prayerTime.getPrayerTime(e.ordinal()).minusMinutes(1)) && 
                 currTime.isBefore(prayerTime.getPrayerTime((e.next().ordinal())))
             ) {
-                System.out.println("\nCurrent Prayer: " + CompulsoryPrayerTimeEnum.values()[e.ordinal()]);
+                System.out.println("\nCurrent Prayer: " + CompulsoryPrayersTimeEnum.values()[e.ordinal()]);
             
             } else if (
-                compulsoryPrayers.getFromIndex(e.ordinal()).getTaskName().equals(CompulsoryPrayerTimeEnum.ISYAK.toString()) &&
+                compulsoryPrayers.getFromIndex(e.ordinal()).getTaskName().equals(CompulsoryPrayersTimeEnum.ISYAK.toString()) &&
                 (
                     currTime.isAfter(prayerTime.getPrayerTime(e.ordinal()).minusMinutes(1)) ||
                     currTime.isBefore(prayerTime.getPrayerTime(e.next().ordinal()))
                 )
             ) {
-                System.out.println("\nCurrent Prayer: " + CompulsoryPrayerTimeEnum.values()[e.ordinal()]);
+                System.out.println("\nCurrent Prayer: " + CompulsoryPrayersTimeEnum.values()[e.ordinal()]);
             }
         }
     }
@@ -98,7 +98,7 @@ public class Main {
     private static void displayMissedPrayers(CompulsoryPrayers compulsoryPrayers, LocalTime currTime, PrayerTime prayerTime) {
         boolean havePrayersNotDone = false;
         int[] prayerNotDoneArr = new int[5];
-        for (CompulsoryPrayerTimeEnum e : CompulsoryPrayerTimeEnum.values()) {
+        for (CompulsoryPrayersTimeEnum e : CompulsoryPrayersTimeEnum.values()) {
             if (
                 !compulsoryPrayers.getFromIndex(e.ordinal()).getCompletionStatus() && 
                 currTime.isAfter(prayerTime.getPrayerTime(e.next().ordinal()))

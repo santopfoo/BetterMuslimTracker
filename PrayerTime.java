@@ -7,11 +7,11 @@ public class PrayerTime {
     private LocalTime[] prayerTime = new LocalTime[5];
     
     public PrayerTime() {
-        this.prayerTime[CompulsoryPrayerTimeEnum.SUBUH.ordinal()] = LocalTime.parse("06:00");
-        this.prayerTime[CompulsoryPrayerTimeEnum.ZOHOR.ordinal()] = LocalTime.parse("13:20");
-        this.prayerTime[CompulsoryPrayerTimeEnum.ASAR.ordinal()] = LocalTime.parse("16:40");
-        this.prayerTime[CompulsoryPrayerTimeEnum.MAGHRIB.ordinal()] = LocalTime.parse("19:30");
-        this.prayerTime[CompulsoryPrayerTimeEnum.ISYAK.ordinal()] = LocalTime.parse("20:30");
+        this.prayerTime[CompulsoryPrayersTimeEnum.SUBUH.ordinal()] = LocalTime.parse("06:00");
+        this.prayerTime[CompulsoryPrayersTimeEnum.ZOHOR.ordinal()] = LocalTime.parse("13:20");
+        this.prayerTime[CompulsoryPrayersTimeEnum.ASAR.ordinal()] = LocalTime.parse("16:40");
+        this.prayerTime[CompulsoryPrayersTimeEnum.MAGHRIB.ordinal()] = LocalTime.parse("19:30");
+        this.prayerTime[CompulsoryPrayersTimeEnum.ISYAK.ordinal()] = LocalTime.parse("20:30");
     }
 
     public LocalTime getPrayerTime(int index) {
