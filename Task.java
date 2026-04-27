@@ -19,23 +19,27 @@ public class Task {
 
 
     public String getTaskName() {
-        return taskName;
+        return taskName.trim();
     }
 
     public String getStartEndTime() {
-        return (startTime.toString() + " => " + endTime.toString());
+        return (startTime.toString() + " - " + endTime.toString());
     }
 
     public boolean getCompletionStatus() {
         return isCompleted;
     }
 
+    public void setCompletionStatus(boolean status) {
+        this.isCompleted = status;
+    }
+
     @Override
     public String toString() {
         return (
-            "Task name: " + taskName
-            + "\nTask time: " + startTime + " - " + endTime
-            + "\nTask done: " + (isCompleted ? "Yes" : "No")
+            "Task name: " + getTaskName()
+            + "\nTask time: " + getStartEndTime()
+            + "\nTask completion: " + (getCompletionStatus() ? "Yes" : "No")
         );
     }
 }

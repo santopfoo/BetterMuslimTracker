@@ -1,15 +1,11 @@
 package BetterMuslimTracker;
 
-import java.time.LocalTime;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        PrayersTime prayerTime = new PrayersTime();
         CompulsoryPrayers compulsoryPrayers = new CompulsoryPrayers();
-
-        LocalTime currTime = LocalTime.now();
 
         boolean exitChoice = false;
         while (true && !exitChoice) {
@@ -20,23 +16,28 @@ public class Main {
                 "\n1. Display Compulsory Prayers Time" +
                 "\n2. Display Current Prayer" +
                 "\n3. Display Missed Prayers" +
-                "\n4. Exit Program" +
-                "\nEnter choice:"
+                "\n4. Set A Prayer As Completed" +
+                "\n5. Exit" +
+                "\nEnter choice: "
             );
 
             choice = input.nextInt();
+            input.nextLine();
 
             switch (choice) {
                 case 1:
-                    displayCompulsoryPrayersTime(compulsoryPrayers, currTime);
+                    compulsoryPrayers.displayAllCompulsoryPrayers();;
                     break;
                 case 2:
-                    displayCurrentPrayer(compulsoryPrayers, currTime, prayerTime);
+                    compulsoryPrayers.displayCurrentPrayer();                    
                     break;
                 case 3:
-                    displayMissedPrayers(compulsoryPrayers, currTime, prayerTime);
+                    compulsoryPrayers.displayMissedCompulsoryPrayers();;
                     break;
                 case 4:
+                    compulsoryPrayers.setPrayerCompleted(input);
+                    break;
+                case 5:
                     exitChoice = true;
                     break;
                 default:
@@ -44,7 +45,15 @@ public class Main {
             }
         }
 
-
+        /*
+        while (true) {
+            System.out.println(
+                "\nChoices Menu\n============" +
+                "\n1. Display All Tasks" + 
+                "\n2. Create New Task" +
+                "\n3. Exit Program"
+            );
+        }*/
 
 
 
@@ -69,53 +78,9 @@ public class Main {
         }*/
     }  
 
-    private static void displayCompulsoryPrayersTime(CompulsoryPrayers compulsoryPrayers, LocalTime currTime) {
-            for (CompulsoryPrayersTimeEnum e : CompulsoryPrayersTimeEnum.values()) {
-            System.out.println("\n" + compulsoryPrayers.getFromIndex(e.ordinal()).toString());
-        }
-    }
-
-    private static void displayCurrentPrayer(CompulsoryPrayers compulsoryPrayers, LocalTime currTime, PrayersTime prayerTime) {
-        for (CompulsoryPrayersTimeEnum e : CompulsoryPrayersTimeEnum.values()) {
-            if (
-                currTime.isAfter(prayerTime.getPrayerTime(e.ordinal()).minusMinutes(1)) && 
-                currTime.isBefore(prayerTime.getPrayerTime((e.next().ordinal())))
-            ) {
-                System.out.println("\nCurrent Prayer: " + CompulsoryPrayersTimeEnum.values()[e.ordinal()]);
+    private static void displayAllTasksMenu() {
+        while (true) {
             
-            } else if (
-                compulsoryPrayers.getFromIndex(e.ordinal()).getTaskName().equals(CompulsoryPrayersTimeEnum.ISYAK.toString()) &&
-                (
-                    currTime.isAfter(prayerTime.getPrayerTime(e.ordinal()).minusMinutes(1)) ||
-                    currTime.isBefore(prayerTime.getPrayerTime(e.next().ordinal()))
-                )
-            ) {
-                System.out.println("\nCurrent Prayer: " + CompulsoryPrayersTimeEnum.values()[e.ordinal()]);
-            }
-        }
-    }
-
-    private static void displayMissedPrayers(CompulsoryPrayers compulsoryPrayers, LocalTime currTime, PrayersTime prayerTime) {
-        boolean havePrayersNotDone = false;
-        int[] prayerNotDoneArr = new int[5];
-        for (CompulsoryPrayersTimeEnum e : CompulsoryPrayersTimeEnum.values()) {
-            if (
-                !compulsoryPrayers.getFromIndex(e.ordinal()).getCompletionStatus() && 
-                currTime.isAfter(prayerTime.getPrayerTime(e.next().ordinal()))
-            ) {
-                prayerNotDoneArr[e.ordinal()] = e.ordinal();
-                havePrayersNotDone = true;
-            } else {
-                prayerNotDoneArr[e.ordinal()] = -1;
-            }
-        }
-        if (havePrayersNotDone) {
-            System.out.println("\nMissed Prayer(s):");
-            for (int i : prayerNotDoneArr) {
-                if (i != -1) {
-                    System.out.println(compulsoryPrayers.getFromIndex(i).toString());   
-                }
-            }
         }
     }
 }
