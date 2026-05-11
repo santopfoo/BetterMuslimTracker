@@ -1,4 +1,4 @@
-package BetterMuslimTracker;
+package SolatTracker;
 
 import java.util.Scanner;
 
@@ -41,46 +41,10 @@ public class Main {
                     exitChoice = true;
                     break;
                 default:
+                    System.out.println("Invalid choice");
                     break;
             }
         }
-
-        /*
-        while (true) {
-            System.out.println(
-                "\nChoices Menu\n============" +
-                "\n1. Display All Tasks" + 
-                "\n2. Create New Task" +
-                "\n3. Exit Program"
-            );
-        }*/
-
-
-
-
-
-        /*
-        ArrayList<LocalTime> taskArr = new ArrayList<>();
-        System.out.println(
-            "1. Add Task"
-            + "2. Complete Task"
-        );
-
-        int choice = input.nextInt();
-
-        switch (choice) {
-            case 1:
-                
-                break;
-        
-            default:
-                break;
-        }*/
+        System.out.println("Thank you for using the program! Exiting...");
     }  
-
-    private static void displayAllTasksMenu() {
-        while (true) {
-            
-        }
-    }
 }

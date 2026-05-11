@@ -1,4 +1,4 @@
-package BetterMuslimTracker;
+package SolatTracker;
 
 import java.time.LocalTime;
 
