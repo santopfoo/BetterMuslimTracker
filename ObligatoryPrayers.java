@@ -8,7 +8,7 @@ public class ObligatoryPrayers {
     private OPTime time = new OPTime();
 
     public ObligatoryPrayers() {
-        for (OPEnum e : OPEnum.values()) {
+        for (OPEnum e: OPEnum.values()) {
             oPrayers[e.i()] = new Prayer(
                 e.toString(), 
                 time.getTime(e.i()),
@@ -18,38 +18,39 @@ public class ObligatoryPrayers {
 
     }
 
-    public Prayer get(int index) {return oPrayers[index];}
-
-    private int currTime = time.normaliseTime(LocalTime.now());
+    public Prayer get(int index) { return oPrayers[index]; }
 
     public void displayCurrentPrayer() {
-        for (OPEnum e : OPEnum.values()) {
-            int normalStartTime = time.normaliseTimeIndex(e.i());
-            int normalEndTime = time.normaliseEndTimeIndex(e.i());
+        int currTime = time.normaliseTime(LocalTime.now());
+        for (int i = 0; i < oPrayers.length; i++) {
+            int normalStartTime = time.normaliseTimeIndex(i);
+            int normalEndTime = time.normaliseEndTimeIndex(i);
 
             if (currTime >= normalStartTime && currTime <= normalEndTime) {
-                System.out.println("\n" + this.get(e.i()).toString());
+                System.out.println("\n" + this.get(i).toString());
             }
         }
     }
 
     public void displayAllCompulsoryPrayers() {
-        for (OPEnum e : OPEnum.values()) {
-            System.out.println("\n" + this.get(e.i()).toString());
+        for (int i = 0; i < oPrayers.length; i++) {
+            System.out.println("\n" + this.get(i).toString());
         }
     }
 
     public void displayMissedCompulsoryPrayers() {
-        for (OPEnum e : OPEnum.values()) {
-            if (currTime > time.normaliseEndTimeIndex(e.i()) 
-                && !this.get(e.i()).getCompletionStatus()) {
+        int currTime = time.normaliseTime(LocalTime.now());
+        for (int i = 0; i < oPrayers.length; i++) {
+            if (currTime > time.normaliseEndTimeIndex(i) 
+                && !this.get(i).getCompletionStatus()) {
                 
-                System.out.println("\n" + this.get(e.i()).toString());
+                System.out.println("\n" + this.get(i).toString());
             }
         }
     }
 
     public void setPrayerCompleted(Scanner input) {
+        int currTime = time.normaliseTime(LocalTime.now());
         String prayer = null;
         int index = -1;
         while (true) {
@@ -75,7 +76,5 @@ public class ObligatoryPrayers {
         this.get(index).setCompletionStatus(true);
     }
 
-    public void setPrayersCompleted(User user) {
-        for (int i = 0; i < oPrayers.length; i++) {oPrayers[i].setCompletionStatus(user.getCompleteStatus(i));}
-    }
+    public void setPrayersCompleted(User user) {for (int i = 0; i < oPrayers.length; i++) {oPrayers[i].setCompletionStatus(user.getCompletionStatus(i));}}
 }

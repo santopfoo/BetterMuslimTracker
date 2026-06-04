@@ -8,42 +8,37 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 
-public class User {
+public class Users {
+
     private static Path filePath = Paths.get("SolatTracker", "users.csv");
-    private int userID;
-    private String password;
-    private boolean[] tasks = new boolean[5];
-
-    public User(int userID, String password) {
-        this.userID = userID;
-        this.password = password;
+    ArrayList<User> users = new ArrayList<User>();
+    
+    public Users() {
+        users = readDataFromFile(filePath);
     }
-
-    public User(int userID, String password, boolean[] tasks) {
-        this.userID = userID;
-        this.password = password;
-        this.tasks = tasks;
-    }
-
-    public int getUserID() {return userID;}
-    public String getPassword() {return password;}
-    public boolean getCompletionStatus(int index) {return tasks[index];}
 
     /**
-     * @return id,password,tasksCompleteStatus[0:5]
+     * 
+     * @param userID
+     * @param password
+     * 
+     * @return If user exists, registered user and tasks.
+     * If not, null
      */
-    public String toCSV() {
-        String line = userID + "," + password;
-        for (boolean b : tasks) {
-            line += "," + Boolean.toString(b);
+    public User getUserFromUsers(int userID, String password) {
+
+        for (User user : users) {
+            if (user.getUserID() == userID && user.getPassword().equals(password)) {
+                System.out.println("Welcome user " + userID);
+                return user;
+            }
         }
 
-        return line;
+        return null;
+        // return new User(1, "1");
     }
 
-    public static ArrayList<User> getUsersArray() {
-        return readDataFromFile(filePath);
-    }
+
 
     private static void createFileIfNotExist(Path filePath) {
         try {
@@ -80,15 +75,11 @@ public class User {
         try (BufferedWriter bw = Files.newBufferedWriter(filePath, StandardOpenOption.CREATE,
                 StandardOpenOption.TRUNCATE_EXISTING)) {
             for (User user : users) {
-                bw.write(user.toCSV());
+                bw.write(user.toString());
                 bw.newLine();
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-    }
-
-    public static class MaxUserException extends Exception {
-        public MaxUserException() {super("Max amount of users reached.\nNo new users can be created");}
     }
 }
