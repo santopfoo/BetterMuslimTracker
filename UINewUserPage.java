@@ -79,7 +79,7 @@ public class UINewUserPage {
                 "Please go back to login"
             );
             users.add(new User(id, password));
-            User.saveUsersToFile(users);
+            User.saveDataToFile(users);
         });
 
         
