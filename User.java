@@ -25,9 +25,15 @@ public class User {
         this.tasks = tasks;
     }
 
-    public int getUserID() {return userID;}
-    public String getPassword() {return password;}
-    public boolean getCompletionStatus(int index) {return tasks[index];}
+    public int getUserID() { return userID; }
+    public String getPassword() { return password; }
+    public boolean getCompletionStatus(int index) { return tasks[index]; }
+
+    public static ObligatoryPrayers setCompletionStatus(int index, boolean status, User currUser, ObligatoryPrayers oPrayers) { 
+        currUser.tasks[index] = status; 
+        oPrayers.setPrayersCompleted(currUser);
+        return oPrayers;
+    }
 
     /**
      * @return id,password,tasksCompleteStatus[0:5]

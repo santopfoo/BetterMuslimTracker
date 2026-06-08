@@ -19,62 +19,11 @@ public class ObligatoryPrayers {
     }
 
     public Prayer get(int index) { return oPrayers[index]; }
-
-    public void displayCurrentPrayer() {
-        int currTime = time.normaliseTime(LocalTime.now());
+    public int length() { return oPrayers.length; }
+    public void setPrayersCompleted(User user) {
         for (int i = 0; i < oPrayers.length; i++) {
-            int normalStartTime = time.normaliseTimeIndex(i);
-            int normalEndTime = time.normaliseEndTimeIndex(i);
+            oPrayers[i].setCompletionStatus(user.getCompletionStatus(i));
 
-            if (currTime >= normalStartTime && currTime <= normalEndTime) {
-                System.out.println("\n" + this.get(i).toString());
-            }
         }
     }
-
-    public void displayAllCompulsoryPrayers() {
-        for (int i = 0; i < oPrayers.length; i++) {
-            System.out.println("\n" + this.get(i).toString());
-        }
-    }
-
-    public void displayMissedCompulsoryPrayers() {
-        int currTime = time.normaliseTime(LocalTime.now());
-        for (int i = 0; i < oPrayers.length; i++) {
-            if (currTime > time.normaliseEndTimeIndex(i) 
-                && !this.get(i).getCompletionStatus()) {
-                
-                System.out.println("\n" + this.get(i).toString());
-            }
-        }
-    }
-
-    public void setPrayerCompleted(Scanner input) {
-        int currTime = time.normaliseTime(LocalTime.now());
-        String prayer = null;
-        int index = -1;
-        while (true) {
-            System.out.println("\nPrayer List");
-            for (OPEnum e : OPEnum.values()) {
-                System.out.println(e);
-            }
-
-            System.out.println("\nFrom the above list, enter which prayer you have completed:");
-            try {
-                prayer = input.nextLine().trim().toUpperCase();
-                index = OPEnum.valueOf(prayer).i();   
-                break;
-            } catch (Exception e) {System.out.println("\nIncorrect prayer spelling. Try again\n");}
-        }
-
-        int normalTime = time.normaliseTimeIndex(index);
-        if (normalTime > currTime) {
-            System.out.println("The current time, " + currTime / 60 + ":" + currTime % 60 + " is not for prayer " + prayer);
-            return;
-        }
-
-        this.get(index).setCompletionStatus(true);
-    }
-
-    public void setPrayersCompleted(User user) {for (int i = 0; i < oPrayers.length; i++) {oPrayers[i].setCompletionStatus(user.getCompletionStatus(i));}}
 }

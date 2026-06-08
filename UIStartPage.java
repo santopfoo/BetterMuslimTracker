@@ -1,5 +1,6 @@
 package SolatTracker;
 
+import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -49,17 +50,17 @@ public class UIStartPage {
 
         gPane.add(loginButton, 1, 2);
         gPane.add(newUserButton, 2, 2);
-        root.getChildren().addAll(iView, gPane);
-        root.requestFocus();
+
+        Button dummy = new Button();
+        dummy.requestFocus();
+        root.getChildren().addAll(dummy, iView, gPane);
         
         // Timeline flicker = new Timeline(
         //     new KeyFrame(Duration.ZERO, new KeyValue(iView.opacityProperty(), 0.0)),
-        //     new KeyFrame(Duration.millis(80), new KeyValue(iView.opacityProperty(), 1.0)),
-        //     new KeyFrame(Duration.millis(160), new KeyValue(iView.opacityProperty(), 0.3)),
-        //     new KeyFrame(Duration.millis(260), new KeyValue(iView.opacityProperty(), 0.9)),
-        //     new KeyFrame(Duration.millis(340), new KeyValue(iView.opacityProperty(), 0.2)),
-        //     new KeyFrame(Duration.millis(420), new KeyValue(iView.opacityProperty(), 0.5)),
-        //     new KeyFrame(Duration.millis(700), new KeyValue(iView.opacityProperty(), 1.0))
+        //     new KeyFrame(Duration.millis(80), new KeyValue(iView.opacityProperty(), 0.05, Interpolator.DISCRETE)),
+        //     new KeyFrame(Duration.millis(400), new KeyValue(iView.opacityProperty(), 0.05, Interpolator.DISCRETE)),
+        //     new KeyFrame(Duration.millis(800), new KeyValue(iView.opacityProperty(), 0.2, Interpolator.DISCRETE)),
+        //     new KeyFrame(Duration.seconds(2.5), new KeyValue(iView.opacityProperty(), 1.0, Interpolator.DISCRETE))
         // );
         // flicker.setCycleCount(1);
         // flicker.setAutoReverse(false);
