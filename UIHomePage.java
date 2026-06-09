@@ -1,6 +1,5 @@
 package SolatTracker;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 
 import javafx.geometry.Insets;
@@ -21,7 +20,6 @@ import javafx.scene.text.Text;
 public class UIHomePage {
     private static ObligatoryPrayers oPrayers = new ObligatoryPrayers();
     public static Scene create(UIMain app, User currUser) {
-        oPrayers.setPrayersCompleted(currUser);
         GridPane root = new GridPane();
         ColumnConstraints cc1 = new ColumnConstraints();
         cc1.setPercentWidth(30);
@@ -31,7 +29,6 @@ public class UIHomePage {
         root.setGridLinesVisible(true);
 
         ArrayList<User> users = User.getUsersArray(); 
-        OPTime oTime = new OPTime();
         for (int i = 0; i < oPrayers.length(); i++) {
             RowConstraints rc = new RowConstraints();
             rc.setPercentHeight(19);
@@ -44,39 +41,20 @@ public class UIHomePage {
 
             Text prayerTime = new Text("Prayer Time: " + oPrayers.get(i).getStartEndTime());
             Text prayerCompletion = new Text("Completion: " + (oPrayers.get(i).getCompletionStatus() ? "Yes" : "No"));
-            VBox prayerTimeCompletionBox = new VBox(20, prayerTime, prayerCompletion);
-            VBox.setMargin(prayerTime, new Insets(0,0,0,50));
-            VBox.setMargin(prayerCompletion, new Insets(0,0,0,50));
+            VBox prayerTimeCompletionBox = new VBox(prayerTime, prayerCompletion);
+            VBox.setMargin(prayerTimeCompletionBox, new Insets(0,0,0,30));
             prayerTimeCompletionBox.setAlignment(Pos.CENTER);
 
             Button setCompleteButton = new Button("Done Prayer");
-            Text notAvailablText = new Text("It is not currently\n" + prayerName.getText() + " time slot");
-            notAvailablText.setVisible(false);
-            VBox completeBox = new VBox(20, setCompleteButton, notAvailablText);
-            completeBox.setPadding(new Insets(0,0,0,80));
-            completeBox.setAlignment(Pos.CENTER);
-
-            Text missedPrayerText = new Text("Missed Prayer " + prayerName.getText());
-            missedPrayerText.setVisible(false);
-            if (oTime.normaliseTime(LocalTime.now()) > oTime.normaliseEndTimeIndex(i) && !oPrayers.get(i).getCompletionStatus()) {
-                missedPrayerText.setVisible(true);
-            }
-            VBox missedPrayerBox = new VBox(missedPrayerText);
 
             int index = i;
             setCompleteButton.setOnAction(e -> {
-                if (oTime.normaliseTime(LocalTime.now()) > oTime.normaliseTimeIndex(index) 
-                    && oTime.normaliseTime(LocalTime.now()) < oTime.normaliseEndTimeIndex(index)) {
-                    prayerCompletion.setText("Completion: Yes");
-                    User.setCompletionStatus(index, true, currUser, oPrayers);
-                    replaceUserInUsers(currUser);
-                    User.saveDataToFile(users);
-                } else {
-                    notAvailablText.setVisible(true);
-                }
+                prayerCompletion.setText("Yes");
+                User.setCompletionStatus(index, true, currUser, oPrayers);
+                replaceUserInUsers(currUser);
+                User.saveDataToFile(users);
             });
-            HBox prayerDetailsBox = new HBox(10, prayerTimeCompletionBox, completeBox, missedPrayerBox);
-            prayerDetailsBox.setMinWidth(630);
+            HBox prayerDetailsBox = new HBox(10, prayerTimeCompletionBox, setCompleteButton);
         
             root.getRowConstraints().add(rc);
             root.add(prayerNameBox, 0, i);
